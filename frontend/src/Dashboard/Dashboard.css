@@ -1,0 +1,48 @@
+body {
+    background: #ffffff;
+}
+
+.logo {
+    font-size: 18pt;
+    font-family: 'Titillium Web', sans-serif;
+    line-height: 10px;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 12px;
+    background: #40a9ff;
+    color: #fff;
+}
+
+.opts {
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #91d5ff;
+}
+
+.tags {
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #bae7ff;
+}
+
+.inputbox {
+    flex-grow: 1;
+    height: 480px;
+}
+
+.outputbox {
+    flex-grow: 1;
+    height: 480px;
+}
+
+.texts {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #e6f7ff;
+}
+
+textarea { resize: none; }

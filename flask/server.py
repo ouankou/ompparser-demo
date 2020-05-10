@@ -21,6 +21,10 @@ def index():
 
 @app.route("/uploader", methods=['GET', 'POST'])
 def uploader():
+
+    taskID = ''
+    taskFolder = ''
+
     try:
         os.makedirs(UPLOAD_FOLDER)
     except FileExistsError:
@@ -36,12 +40,20 @@ def uploader():
                 name = ""
             else:
                 filename = secure_filename(f.filename)
-                f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                taskID = str(time.time())
+                taskFolder = app.config['UPLOAD_FOLDER'] + '/' + taskID
+                try:
+                    os.makedirs(taskFolder)
+                except FileExistsError:
+                    pass
+                f.save(os.path.join(taskFolder, filename))
                 name = filename
         else:
             name = ""
         print(name)
-        res = name
+        res = taskID
+        # /tmp/taskID/taskID_report.txt is the list of directives
+        # /tmp/taskID/taskID_DIRECTIVE_INDEX.dot/svg/png is the graph, such as <taskID>_parallel_3.dot
         print(res)
         return render_template('index.html', val=res)
 
@@ -99,6 +111,14 @@ def test():
                 flask.jsonify({'archer': json.loads(str)}), 200)
         else:
             return render_template('index.html', val=str.split('\n'))
+
+def process(filename):
+    # call ompparser to generate a term list of OpenMP directives
+
+    # call ompparser to generate a list of DOT graph files
+
+    # return True if success, otherwise False
+    return True
 
 
 if __name__ == "__main__":

@@ -11,6 +11,9 @@ RUN \
     apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
     apt-get install -y \
+        bison \
+        cmake \
+        flex \
         git \
         python3-flask \
         python3-requests \
@@ -23,7 +26,7 @@ RUN \
 RUN npm install serve -g
 
 # Switch user and working directory.
-USER rose
+USER dev
 COPY --chown=dev:dev [".bashrc", "/home/dev/"]
 COPY --chown=dev:dev ["frontend", "/home/dev/frontend"]
 COPY --chown=dev:dev ["flask", "/home/dev/flask"]
@@ -37,7 +40,7 @@ RUN git clone -b dev https://github.com/passlab/ompparser.git && \
     make && \
     make install
 
-ENV PATH /home/dev/ompparser_install
+ENV PATH /home/dev/ompparser_install/bin:${PATH}
 
 WORKDIR /home/dev/frontend
 RUN npm ci && \
@@ -45,3 +48,6 @@ RUN npm ci && \
 
 # Define default command.
 CMD ["serve", "-s", "build"]
+
+# Start Flask server by default
+ENTRYPOINT /home/dev/flask/start.sh && /bin/bash

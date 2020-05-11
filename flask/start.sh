@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cd /home/rds/rds-meta && python3 terminal.py
+cd /home/dev/flask && python3 server.py

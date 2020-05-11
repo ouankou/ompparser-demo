@@ -51,7 +51,18 @@ def uploader():
         else:
             name = ""
         print(name)
-        res = taskID
+
+        process(filename, taskFolder)
+
+        pragmaDict = {}
+        pragmaFile = open(taskFolder + '/' + filename + '.pragmas', "r");
+        index = 1
+        for line in pragmaFile:
+            pragmaDict[str(index)] = (line)
+            index += 1
+
+
+        res = pragmaDict
         # /tmp/taskID/taskID_report.txt is the list of directives
         # /tmp/taskID/taskID_DIRECTIVE_INDEX.dot/svg/png is the graph, such as <taskID>_parallel_3.dot
         print(res)
@@ -112,8 +123,17 @@ def test():
         else:
             return render_template('index.html', val=str.split('\n'))
 
-def process(filename):
+def process(filename, taskFolder):
     # call ompparser to generate a term list of OpenMP directives
+    cmd_list = [
+        "./check.sh " + taskFolder + '/' + filename,
+    ]
+    for cmd in cmd_list:
+        arr = cmd.split()
+        with open(
+                os.path.join(taskFolder,
+                             "raw_output.txt"), "w") as file:
+            run(arr, stdout=file, stderr=file, universal_newlines=True)
 
     # call ompparser to generate a list of DOT graph files
 

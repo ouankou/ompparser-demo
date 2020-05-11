@@ -13,5 +13,16 @@
       <input type="submit" />
     </form>
 
+    {% if ('1' in val) %}
+    <table>
+      {% for key, value in val.items() %}
+        <tr>
+          <th> {{ key }} </th>
+          <td> {{ value }} </td>
+        </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+
   </body>
 </html>

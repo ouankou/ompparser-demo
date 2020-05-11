@@ -7,6 +7,7 @@ import json
 import time
 from werkzeug.utils import secure_filename
 import threading
+from waitress import serve
 
 UPLOAD_FOLDER = '/tmp'
 app = Flask(__name__)
@@ -85,4 +86,4 @@ def process(filename, taskFolder):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    serve(app, host="0.0.0.0", port=8080)

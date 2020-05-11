@@ -17,6 +17,7 @@ RUN \
         git \
         python3-flask \
         python3-requests \
+        python3-waitress \
         npm \
         vim \
         wget && \

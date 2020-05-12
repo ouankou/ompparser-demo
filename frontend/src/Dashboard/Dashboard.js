@@ -45,6 +45,8 @@ class Dashboard extends React.Component {
         } else {
             this.setState({myDisplay: 'row'});
         }
+              
+        this.setState({myPreview: null});
     };
 
     componentWillUnmount() {

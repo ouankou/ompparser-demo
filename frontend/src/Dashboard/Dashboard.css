@@ -15,6 +15,7 @@ body {
 }
 
 .opts {
+    display: flex;
     padding-left: 10px;
     padding-right: 10px;
     background: #91d5ff;
@@ -28,12 +29,12 @@ body {
 
 .inputbox {
     flex-grow: 1;
-    height: 480px;
+    height: 550px;
 }
 
 .outputbox {
     flex-grow: 1;
-    height: 480px;
+    height: 550px;
 }
 
 .texts {

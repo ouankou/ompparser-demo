@@ -8,16 +8,18 @@ import time
 from werkzeug.utils import secure_filename
 import threading
 from waitress import serve
+from flask_cors import CORS
 
 UPLOAD_FOLDER = '/tmp'
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+CORS(app)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template('index.html', val="")
-
+    #return render_template('index.html', val="")
+    return {"status":"SUCCESS!", "msg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Abstract_syntax_tree_for_Euclidean_algorithm.svg/1024px-Abstract_syntax_tree_for_Euclidean_algorithm.svg.png"}
 
 @app.route("/uploader", methods=['GET', 'POST'])
 def uploader():

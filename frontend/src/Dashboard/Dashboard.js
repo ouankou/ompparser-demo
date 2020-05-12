@@ -100,7 +100,7 @@ Of course, CORS is needed
     };
 
     Cpl = () => {
-       axios.get('http://0.0.0.0:5000/').then(res => {
+       axios.get('http://0.0.0.0:8080/').then(res => {
           this.setState({ myStatus: res.data.status, myOutput: res.data.msg});
        })
 

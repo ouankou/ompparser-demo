@@ -16,6 +16,7 @@ RUN \
         flex \
         git \
         python3-flask \
+        python3-flask-cors \
         python3-requests \
         python3-waitress \
         npm \

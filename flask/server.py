@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, session, g
 from subprocess import PIPE, run
 import requests
 import subprocess
@@ -19,26 +19,26 @@ CORS(app)
 @app.route("/", methods=["GET", "POST"])
 def index():
     #return render_template('index.html', val="")
-    return {"status":"SUCCESS!", "msg": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Abstract_syntax_tree_for_Euclidean_algorithm.svg/1024px-Abstract_syntax_tree_for_Euclidean_algorithm.svg.png"}
+    return "HELLO ONLINE COMPILER! Now we have /uploader and /getRes"
 
-@app.route("/uploader", methods=['GET', 'POST'])
+@app.route("/uploader", methods=['GET','POST'])
 def uploader():
-
     taskID = ''
     taskFolder = ''
+    filename = ""
 
     try:
         os.makedirs(UPLOAD_FOLDER)
     except FileExistsError:
         pass
     name = ""
+    
     if request.method == "POST":
         if 'file' in request.files:
             f = request.files['file']
             if not f:
                 print("file is empty")
-                return render_template('index.html',
-                                       val={"Please insert the file"})
+                return render_template('index.html', val={"Please insert the file"})
                 name = ""
             else:
                 filename = secure_filename(f.filename)
@@ -53,23 +53,38 @@ def uploader():
         else:
             name = ""
         print(name)
-
+        
         process(filename, taskFolder)
 
         # /tmp/taskID/<input_filename>.pragmas is the list of directives
         pragmaDict = {}
-        pragmaFile = open(taskFolder + '/' + filename + '.pragmas', "r");
+        '''
+        pragmaFile = open(taskFolder + '/' + filename + '.pragmas', "r")
         index = 1
         for line in pragmaFile:
             pragmaDict[str(index)] = (line)
             index += 1
-
-
+        '''
         res = pragmaDict
+        
         # /tmp/taskID/<input_filename>.DIRECTIVE_INDEX.dot/svg/png is the graph, such as foo.c.parallel_3.dot
+        
+        print(taskID)
+# prepare for info.file.response @ReactJS
+        return taskID #render_template('index.html', val=res)
 
-        return render_template('index.html', val=res)
-
+@app.route("/getRes", methods=['GET'])
+def getRes():
+# get data path, by passing parameters
+    p1 = request.args.get('p1')
+    tid = request.args.get('tid')
+    fileName = request.args.get('fn')
+    #myPath = p1 + "/" + tid + "/" + fileName
+    #print(myPath)
+# get file contant
+    tmp = open(fileName).read()
+# returning list
+    return jsonify(tmp)
 
 def process(filename, taskFolder):
     # call ompparser to generate a term list of OpenMP directives

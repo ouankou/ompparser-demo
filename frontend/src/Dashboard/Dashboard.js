@@ -25,11 +25,13 @@ class Dashboard extends React.Component {
         myWidth: 0,
         myFile: null,
         myPreview: null,
-        myCompiler: 'GCC',
+        myCompiler: 'GCC8',
         myRuntime: 'LLVM',
         myLib: null,
+        myKey: "myKey",
         myStatus: null,
-        myOutput: null
+        myOutput: null,
+        myRes: null
     };
     
     constructor(props) {
@@ -88,6 +90,7 @@ Of course, CORS is needed
  */
     Onchg = (info) => {
         this.setState({myFile: info.file.name});
+        this.setState({myKey: info.file.response});
         
         const tmp = new FileReader();
         
@@ -96,18 +99,25 @@ Of course, CORS is needed
               this.setState({myPreview: res.target.result});
         }
 
-        console.log(info.file.originFileObj);
-
-        console.log(this.state.myFile);
+        console.log(info);
+        //console.log(this.state.myFile);
+              
+        let myStr = "/tmp/" + this.state.myKey + "/" + this.state.myFile + ".pragmas";
+        this.setState({myOutput: myStr});
+        
+        //console.log(this.state.myOutput);
+        console.log(this.state);
     };
 
     Cpl = () => {
-       axios.get('http://0.0.0.0:8080/').then(res => {
-          this.setState({ myStatus: res.data.status, myOutput: res.data.msg});
-       })
-
-       console.log(this.state.myStatus);
-       console.log(this.state.myOutput);
+        console.log(this.state.myOutput);
+        axios.get("http://0.0.0.0:8080/getRes?p1=" + "/tmp" + "&tid=" + this.state.myKey + "&fn=" + "raw_output.txt").then(res=>{
+            this.setState({myRes: res.data});
+            console.log(res.data);
+        });
+        //axios.get("http://0.0.0.0:8080/getRes?p1=" + "/tmp" + "&tid=" + this.state.myKey + "&fn=" + this.state.myFile + ".pragmas").then(res=>{console.log(res.data)});
+       
+        if (this.state.myOutput != null) this.setState({myStatus: "SUCCESS"});
     };
 
     Onclk = () => {
@@ -123,12 +133,14 @@ Of course, CORS is needed
     render() {
         let OUTPUT;
 
-        if (this.state.myStatus == "SUCCESS!") {
-              OUTPUT = <Img className = "outputbox" src = {this.state.myOutput}/>
+        if (this.state.myStatus == "SUCCESS") {
+              OUTPUT = <textarea className = "outputbox" value = {this.state.myRes}/>
         } else {
-              OUTPUT = <textarea className = "outputbox" placeholder="Results/Error messages will be shown here" value = {this.state.myOutput}/>
+              OUTPUT = <textarea className = "outputbox" placeholder="Results/Error messages will be shown here"/>
         }
 
+        let myAction = "http://0.0.0.0:8080/uploader"
+              
         return (
             <div>
                 <div className = "logo">
@@ -136,7 +148,7 @@ Of course, CORS is needed
                 </div>
                 <div className = "opts">
                     <Button><HomeOutlined /></Button>
-                    <Upload onChange = {(info) => this.Onchg(info)} showUploadList = {false} ><Button><UploadOutlined /></Button></Upload>
+                    <Upload action = {myAction} onChange = {(info) => this.Onchg(info)} showUploadList = {false} ><Button><UploadOutlined /></Button></Upload>
                     <Button><SaveOutlined /></Button>
                     <Button onClick = {() => this.Onclk()}><RotateRightOutlined /></Button>
                     <Button type="primary" onClick = {() => this.Cpl()}>Compile</Button>

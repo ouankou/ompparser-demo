@@ -4,7 +4,7 @@
 
 ```bash
 docker pull ouankou/ompparser:demo
-docker run -p 5050:8080 --name ompparser_demo ouankou/ompparser:demo &
+docker run -p 8080:8080 -p 5050:5000 --name ompparser_demo ouankou/ompparser:demo &
 ```
 
 Then go to `localhost:5050` to check the ompparser demo.

@@ -115,7 +115,7 @@ Of course, CORS is needed
     };
 
     Onclk = () => {
-       if (this.state.myDisplay == 'row') {
+       if (this.state.myDisplay === 'row') {
            this.setState({myDisplay: 'column'});
        } else {
            this.setState({myDisplay: 'row'});
@@ -127,7 +127,7 @@ Of course, CORS is needed
     render() {
         let OUTPUT;
 
-        if (this.state.myStatus == "SUCCESS") {
+        if (this.state.myStatus === "SUCCESS") {
               OUTPUT = <textarea className = "outputbox" value = {this.state.myRes}/>
         } else {
               OUTPUT = <textarea className = "outputbox" placeholder="Results/Error messages will be shown here"/>
@@ -138,14 +138,14 @@ Of course, CORS is needed
         return (
             <div>
                 <div className = "logo">
-                    <b><ToolOutlined /> | onlineCompiler</b>
+                    <b><ToolOutlined /> | ompparser online demo</b>
                 </div>
                 <div className = "opts">
                     <Button><HomeOutlined /></Button>
                     <Upload action = {myAction} onChange = {(info) => this.Onchg(info)} showUploadList = {false} ><Button><UploadOutlined /></Button></Upload>
                     <Button><SaveOutlined /></Button>
                     <Button onClick = {() => this.Onclk()}><RotateRightOutlined /></Button>
-                    <Button type="primary" onClick = {() => this.Cpl()}>Compile</Button>
+                    <Button type="primary" onClick = {() => this.Cpl()}>Analyze</Button>
                 </div>
                 <div className = "tags">
                     <Select

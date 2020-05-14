@@ -111,11 +111,11 @@ Of course, CORS is needed
 
     Cpl = () => {
         console.log(this.state.myOutput);
-        axios.get("http://0.0.0.0:8080/getRes?p1=" + "/tmp" + "&tid=" + this.state.myKey + "&fn=" + "raw_output.txt").then(res=>{
-            this.setState({myRes: res.data});
-            console.log(res.data);
-        });
-        //axios.get("http://0.0.0.0:8080/getRes?p1=" + "/tmp" + "&tid=" + this.state.myKey + "&fn=" + this.state.myFile + ".pragmas").then(res=>{console.log(res.data)});
+        //axios.get("http://0.0.0.0:8080/getRes?p1=" + "/tmp" + "&tid=" + this.state.myKey + "&fn=" + "raw_output.txt").then(res=>{
+        //    this.setState({myRes: res.data});
+        //    console.log(res.data);
+        //});
+        axios.get("http://0.0.0.0:8080/getRes?p1=" + "/tmp" + "&tid=" + this.state.myKey + "&fn=" + this.state.myFile + ".pragmas").then(res=>{this.setState({myRes: res.data}); console.log(res.data)});
        
         if (this.state.myOutput != null) this.setState({myStatus: "SUCCESS"});
     };

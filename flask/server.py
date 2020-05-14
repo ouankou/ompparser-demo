@@ -79,10 +79,11 @@ def getRes():
     p1 = request.args.get('p1')
     tid = request.args.get('tid')
     fileName = request.args.get('fn')
-    #myPath = p1 + "/" + tid + "/" + fileName
+    myPath = p1 + "/" + tid + "/" + fileName
     #print(myPath)
 # get file contant
-    tmp = open(fileName).read()
+    #tmp = open(fileName).read()
+    tmp = open(myPath).read()
 # returning list
     return jsonify(tmp)
 

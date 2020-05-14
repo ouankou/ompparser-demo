@@ -51,3 +51,12 @@ npm run build
 
 After the steps above, the `package.json` and `package-lock.json` should be updated and ready.
 Those two files can be commited and pushed to GitHub to build a newer Docker image.
+
+## Apache
+
+`Apache` is used to route requests to the correct server.
+`ompparser.conf` is an example to config `Apache` for the ompparser demo, which should be placed in `/etc/apache2/sites-enabled`.
+`Nginx` is also suitable in this case with slight different configuration.
+
+Please notice that the order of proxying entries does matter. For instance, `/task` has to be before `/`.
+

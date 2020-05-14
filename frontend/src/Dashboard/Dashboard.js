@@ -100,23 +100,17 @@ Of course, CORS is needed
         }
 
         console.log(info);
-        //console.log(this.state.myFile);
-              
+
         let myStr = "/tmp/" + this.state.myKey + "/" + this.state.myFile + ".pragmas";
         this.setState({myOutput: myStr});
         
-        //console.log(this.state.myOutput);
         console.log(this.state);
     };
 
     Cpl = () => {
         console.log(this.state.myOutput);
-        //axios.get("http://0.0.0.0:8080/getRes?p1=" + "/tmp" + "&tid=" + this.state.myKey + "&fn=" + "raw_output.txt").then(res=>{
-        //    this.setState({myRes: res.data});
-        //    console.log(res.data);
-        //});
-        axios.get("http://0.0.0.0:8080/getRes?p1=" + "/tmp" + "&tid=" + this.state.myKey + "&fn=" + this.state.myFile + ".pragmas").then(res=>{this.setState({myRes: res.data}); console.log(res.data)});
-       
+        axios.get("/task?content=" + "pragmas" + "&tid=" + this.state.myKey + "&fn=" + this.state.myFile).then(res=>{this.setState({myRes: res.data}); console.log(res.data)});
+
         if (this.state.myOutput != null) this.setState({myStatus: "SUCCESS"});
     };
 
@@ -139,8 +133,8 @@ Of course, CORS is needed
               OUTPUT = <textarea className = "outputbox" placeholder="Results/Error messages will be shown here"/>
         }
 
-        let myAction = "http://0.0.0.0:8080/uploader"
-              
+        let myAction = "/task"
+
         return (
             <div>
                 <div className = "logo">

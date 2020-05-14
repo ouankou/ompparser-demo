@@ -3,7 +3,6 @@ from subprocess import PIPE, run
 import requests
 import subprocess
 import os
-import json
 import time
 from werkzeug.utils import secure_filename
 import threading
@@ -19,21 +18,21 @@ CORS(app)
 @app.route("/", methods=["GET", "POST"])
 def index():
     #return render_template('index.html', val="")
-    return "HELLO ONLINE COMPILER! Now we have /uploader and /getRes"
+    return "HELLO ONLINE COMPILER! Now we have /task POST and GET."
 
-@app.route("/uploader", methods=['GET','POST'])
-def uploader():
+@app.route("/task", methods=['GET','POST'])
+def task():
     taskID = ''
     taskFolder = ''
-    filename = ""
+    filename = ''
 
     try:
         os.makedirs(UPLOAD_FOLDER)
     except FileExistsError:
         pass
-    name = ""
+    name = ''
     
-    if request.method == "POST":
+    if request.method == 'POST':
         if 'file' in request.files:
             f = request.files['file']
             if not f:
@@ -58,34 +57,22 @@ def uploader():
 
         # /tmp/taskID/<input_filename>.pragmas is the list of directives
         pragmaDict = {}
-        '''
-        pragmaFile = open(taskFolder + '/' + filename + '.pragmas', "r")
-        index = 1
-        for line in pragmaFile:
-            pragmaDict[str(index)] = (line)
-            index += 1
-        '''
-        res = pragmaDict
-        
         # /tmp/taskID/<input_filename>.DIRECTIVE_INDEX.dot/svg/png is the graph, such as foo.c.parallel_3.dot
-        
-        print(taskID)
-# prepare for info.file.response @ReactJS
-        return taskID #render_template('index.html', val=res)
+        # prepare for info.file.response @ReactJS
+        return taskID
 
-@app.route("/getRes", methods=['GET'])
-def getRes():
-# get data path, by passing parameters
-    p1 = request.args.get('p1')
-    tid = request.args.get('tid')
-    fileName = request.args.get('fn')
-    myPath = p1 + "/" + tid + "/" + fileName
-    #print(myPath)
-# get file contant
-    #tmp = open(fileName).read()
-    tmp = open(myPath).read()
-# returning list
-    return jsonify(tmp)
+    elif request.method == 'GET':
+        # get data path, by passing parameters
+        content = request.args.get('content')
+        taskID = request.args.get('tid')
+        fileName = request.args.get('fn')
+        filePath = "/tmp/" + taskID + "/" + fileName
+        # get file content
+        if content == 'pragmas':
+            result = open(filePath + '.pragmas').read()
+        # returning list
+            return jsonify(result)
+
 
 def process(filename, taskFolder):
     # call ompparser to generate a term list of OpenMP directives

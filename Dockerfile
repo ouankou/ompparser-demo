@@ -48,8 +48,5 @@ WORKDIR /home/dev/frontend
 RUN npm ci && \
     npm run build
 
-# Define default command.
-CMD ["serve", "-s", "build"]
-
 # Start Flask server by default
 ENTRYPOINT /home/dev/flask/start.sh && /bin/bash

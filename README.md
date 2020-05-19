@@ -55,6 +55,14 @@ Those two files can be commited and pushed to GitHub to build a newer Docker ima
 ## Apache
 
 `Apache` is used to route requests to the correct server.
+A few Apache modules are required.
+
+```bash
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo systemctl restart apache2
+```
+
 `ompparser.conf` is an example to config `Apache` for the ompparser demo, which should be placed in `/etc/apache2/sites-enabled`.
 `Nginx` is also suitable in this case with slight different configuration.
 

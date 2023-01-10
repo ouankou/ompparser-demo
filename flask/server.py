@@ -69,7 +69,10 @@ def task():
         filePath = "/tmp/" + taskID + "/" + fileName
         # get file content
         if content == 'pragmas':
-            result = open(filePath + '.pragmas').read()
+            fullPath = os.path.normpath(os.path.join(filePath, '.pragmas'))
+            if not fullPath.startswith("/tmp/"):
+                raise SecurityException()
+            result = open(fullPath).read()
         # returning list
             return jsonify(result)
 
